@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "417276981195",
+    "project_id": "vti-students",
+    "storage_bucket": "vti-students.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417276981195:android:85e39fc625ead84177904e",
+        "android_client_info": {
+          "package_name": "com.virash.vti_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417276981195-8i2mkidn9vcasnkqaici24k7keqncb5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdzgjeT0LMWEJsdbspEpFn3n46dI1a_mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417276981195-8i2mkidn9vcasnkqaici24k7keqncb5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
