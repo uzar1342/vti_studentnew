@@ -8,6 +8,7 @@ import 'package:vti_student/configs/globals.dart';
 
 import 'package:vti_student/configs/urls.dart';
 import 'package:vti_student/home/courses/courses_details_page.dart';
+import 'package:vti_student/home/courses/subcourses.dart';
 import 'package:vti_student/home/notifications/notifications_page.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -22,29 +23,26 @@ class _CoursesPageState extends State<CoursesPage> {
 
   bool showSearch = false;
 
-  List<dynamic> studentCourseList = [];
+  var studentCourseList ;
 
   final TextEditingController _searchController = TextEditingController();
 
   fetchCourseList() async {
     final url = Uri.parse(Urls().studentCourseListUrl);
-    var body = json.encode([
-      {
-        "mobile_number": userPhone,
-        "student_id": userId,
-      }
-    ]);
+    var map = new Map<String, dynamic>();
+    map['student_id'] = userId;
+
+    print(map);
 
     Response response = await post(
       url,
-      body: body,
-      headers: {'Content-type': 'application/json'},
+      body: map,
     );
 
     if (response.statusCode == 200) {
       setState(() {
-        studentCourseList = jsonDecode(response.body);
-
+        studentCourseList = jsonDecode(response.body.toString());
+        print(studentCourseList);
         isLoading = false;
       });
     } else {
@@ -197,7 +195,7 @@ class _CoursesPageState extends State<CoursesPage> {
                                         _searchController.clear();
                                       });
                                     },
-                                    child: Text("Close",
+                                    child: const Text("Close",
                                         style: TextStyle(
                                           color: Colors.black54,
                                           decoration: TextDecoration.underline,
@@ -342,10 +340,10 @@ class _CoursesPageState extends State<CoursesPage> {
                           : ListView.builder(
                               shrinkWrap: true,
                               primary: false,
-                              itemCount: studentCourseList.length,
+                              itemCount: studentCourseList["data"].length,
                               //physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
-                                if (studentCourseList[index]['course_name']
+                                if (studentCourseList["data"][index]['course_name']
                                     .toString()
                                     .toLowerCase()
                                     .contains(
@@ -356,18 +354,23 @@ class _CoursesPageState extends State<CoursesPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  CourseDetailsPage(
-                                                    courseId:
-                                                        studentCourseList[index]
-                                                                ['course_id']
-                                                            .toString(),
-                                                    courseName:
-                                                        studentCourseList[index]
-                                                            ['course_name'],
-                                                    courseDuration:
-                                                        studentCourseList[index]
-                                                            ['course_duration'],
-                                                  )));
+                                              SubCoursesPage(id:  studentCourseList["data"][
+                                              index]
+                                              ['course_id'].toString(),),
+                                                  // CourseDetailsPage(
+                                                  //   courseId:
+                                                  //       studentCourseList[index]
+                                                  //               ['course_id']
+                                                  //           .toString(),
+                                                  //   courseName:
+                                                  //       studentCourseList[index]
+                                                  //           ['course_name'].toString(),
+                                                  //   courseDuration:
+                                                  //       studentCourseList[index]
+                                                  //           ['course_duration'].toString(),
+                                                  // )
+
+                                          ));
                                     },
                                     child: Container(
                                       height: h * 0.1,
@@ -410,8 +413,8 @@ class _CoursesPageState extends State<CoursesPage> {
                                                   child: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl:
-                                                        studentCourseList[index]
-                                                            ['thumbnail'],
+                                                        studentCourseList["data"][index]
+                                                            ['image'].toString(),
                                                     placeholder:
                                                         (context, url) =>
                                                             SpinKitChasingDots(
@@ -433,20 +436,26 @@ class _CoursesPageState extends State<CoursesPage> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: [
-                                                  Text(
-                                                    studentCourseList[index]
-                                                        ['course_name'],
-                                                    style: const TextStyle(
-                                                        color: Colors.black87,
-                                                        fontWeight:
+                                                  Container(
+                                                    width: w*0.6,
+                                                    child: RichText(
+                                                      overflow: TextOverflow.ellipsis,
+                                                      strutStyle: const StrutStyle(fontSize: 12.0),
+                                                      text: TextSpan(
+                                                          style:  const TextStyle(
+                                                            color: Colors.black87,
+                                                            fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 17.0),
+                                                          ),
+                                                          text: studentCourseList["data"][index]
+                                                          ['course_name']),
+                                                    ),
                                                   ),
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        studentCourseList[index]
-                                                            ['course_duration'],
+                                                        studentCourseList["data"][index]
+                                                            ['course_duration'].toString()+" Hours",
                                                         style: const TextStyle(
                                                             color:
                                                                 Colors.black38,
@@ -465,27 +474,10 @@ class _CoursesPageState extends State<CoursesPage> {
                                                       SizedBox(
                                                         width: w * 0.01,
                                                       ),
-                                                      studentCourseList[index]
-                                                                  ['status'] ==
-                                                              'Started'
-                                                          ? Text(
-                                                              studentCourseList[
+                                                      Text(
+                                                              studentCourseList["data"][
                                                                       index]
-                                                                  ['status'],
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .green
-                                                                      .shade400,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      11.0),
-                                                            )
-                                                          : Text(
-                                                              studentCourseList[
-                                                                      index]
-                                                                  ['status'],
+                                                                  ['course_fees'].toString()+" ₹",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .red

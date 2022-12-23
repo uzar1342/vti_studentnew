@@ -17,6 +17,9 @@ import 'package:vti_student/home/reviews/web_view_reviews.dart';
 import 'package:vti_student/home/video_lectures/video_details_page.dart';
 import 'package:vti_student/home/video_lectures/video_lectures_page.dart';
 
+import '../../feedetail.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -308,9 +311,136 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var scaffoldKey = GlobalKey<ScaffoldState>();
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: scaffoldKey,
+      drawerEnableOpenDragGesture: false,
+      drawer:  Drawer(
+        backgroundColor: Colors.transparent,
+        child:  SafeArea(
+          child: Container(
+            color: Colors.white,
+            width: w*0.7,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: Text(
+                          userFirstName.trim()!=""?userFirstName:"User",
+                          style: FlutterFlowTheme.of(context).subtitle1.override(
+                            fontFamily: 'Outfit',
+                            color: Color(0xFF101213),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                        child: Text(
+                          userId,
+                          style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Outfit',
+                            color: Color(0xFF57636C),
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Color(0xFFF1F4F8),
+                        width: 2,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    feedetail()
+
+                            ));
+                      },
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 8, 20, 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Your Payment',
+                                  style: FlutterFlowTheme.of(context).bodyText2.override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                  child: Text(
+                                    'View Payment',
+                                    style: FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.chevron_right_rounded,
+                              color: Color(0xFF95A1AC),
+                              size: 24,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
       extendBody: true,
       body: SafeArea(
           bottom: false,
@@ -344,12 +474,17 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        "Welcome to,",
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18.0),
+                                      GestureDetector(
+                                        onTap: (){
+                                          scaffoldKey.currentState?.openDrawer();
+                                        },
+                                        child: const Text(
+                                          "Welcome to,",
+                                          style: TextStyle(
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0),
+                                        ),
                                       ),
                                       Image.asset(
                                         "assets/images/logo.png",
@@ -1043,7 +1178,7 @@ class _HomePageState extends State<HomePage> {
                                                   child: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl:
-                                                        testimonials[index]
+                                                        testimonials  [index]
                                                             ['thumbnail'],
                                                     placeholder:
                                                         (context, url) =>

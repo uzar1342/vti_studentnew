@@ -115,16 +115,17 @@ class _LoginPageState extends State<LoginPage> {
         Fluttertoast.showToast(msg: res['message']);
         SharedPreferences _prefs = await SharedPreferences.getInstance();
          _prefs.setBool(userLoginStatusKey, true);
-        // _prefs.setString(userPhoneKey, res[0]['mobile_number']);
-        // _prefs.setString(userFirstNameKey, res[0]['first_name']);
+
+         _prefs.setString(userPhoneKey, editingControllerPhone.value.text);
+         _prefs.setString(userFirstNameKey, res["data"]['student_name'].toString());
         // _prefs.setString(userEmailKey, res[0]['email']);
-        // _prefs.setString(userIdKey, res[0]['student_id'].toString());
-        // setState(() {
-        //   userPhone = res[0]['mobile_number'];
-        //   userFirstName = res[0]['first_name'];
-        //   userEmail = res[0]['email'];
-        //   userId = res[0]['student_id'].toString();
-        // });
+         _prefs.setString(userIdKey, res["data"]['student_id'].toString());
+        setState(() {
+          userPhone = res["data"]['student_mobile'].toString();
+          userFirstName = res["data"]['student_name'].toString();
+        //  userEmail = res[0]['email'];
+          userId = res["data"]['student_id'].toString();;
+        });
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const DashPage()),

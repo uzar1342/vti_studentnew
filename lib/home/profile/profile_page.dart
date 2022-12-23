@@ -15,6 +15,9 @@ import 'package:vti_student/home/notifications/notifications_page.dart';
 import 'package:vti_student/home/profile/settings.dart';
 
 import '../../authentication/login_page.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../uploadimg.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -43,10 +46,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   fetchProfileDetails() async {
     final url = Uri.parse(Urls().profileUrl);
-
     var map = new Map<String, dynamic>();
-    map['mobile_number'] = '7718953211';
-
+    map['student_id'] = userId;
+    print(map);
 
     Response response = await post(
       url,
@@ -55,6 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (response.statusCode == 200) {
       getPackageInfo();
+
       setState(() {
         profileDetails = jsonDecode(response.body.toString());
         isLoading = false;
@@ -93,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   )
-                : Column(
+                : profileDetails["data"]!=null?Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,6 +217,79 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       SizedBox(
                         height: h * 0.04,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDBE2E7),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.asset(
+                                    'assets/images/addImage@2x.png',
+                                  ).image,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(Icons.person),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        profileDetails["data"][0]['profile_img'],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                              backgroundColor: Colors.transparent,
+                                              content:Container(color:Colors.transparent,height: 500,child: Uploadimg())
+
+                                          ));
+                                    },
+                                    child: const Align(
+                                      alignment: AlignmentDirectional(1.08, 1.07),
+                                      child: Icon(
+                                        Icons.mode_edit,
+                                        color: Colors.black,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10.0),
@@ -411,6 +487,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+
+
+
                       Container(
                         padding: const EdgeInsets.all(10.0),
                         width: double.infinity - 100,
@@ -729,7 +808,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontSize: 16.0),
                       ),
                     ],
-                  ),
+                  ):Center(child: Container(child: Center(child: Image.asset("assets/images/somthing_went_wrong.png"),),)),
           ),
         ),
       ),

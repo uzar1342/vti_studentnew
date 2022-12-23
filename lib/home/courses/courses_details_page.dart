@@ -37,7 +37,6 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
 
   bool isLoading = true;
   int activePageIndex = 0;
-
   List<dynamic> courseDetails = [];
   List<dynamic> upComingLectures = [];
 
@@ -698,7 +697,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  upComingLectures[index]['faculty_name'],
+                                  upComingLectures[index]['faculty_name'].toString(),
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 15.0,
@@ -724,7 +723,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                                   width: w * 0.02,
                                 ),
                                 Text(
-                                  "${upComingLectures[index]['day']} | ${upComingLectures[index]['lecture_date']}",
+                                  "${upComingLectures[index]['day'].toString()} | ${upComingLectures[index]['lecture_date'].toString()}",
                                   style: const TextStyle(
                                       color: Colors.black54,
                                       fontSize: 16.0,
@@ -748,7 +747,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                                 SizedBox(
                                   width: w * 0.01,
                                 ),
-                                Text(upComingLectures[index]['start_time'],
+                                Text(upComingLectures[index]['start_time'].toString(),
                                     style:
                                         const TextStyle(color: Colors.black54)),
                               ],
@@ -769,7 +768,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                                 SizedBox(
                                   width: w * 0.01,
                                 ),
-                                Text(upComingLectures[index]['end_time'],
+                                Text(upComingLectures[index]['end_time'].toString(),
                                     style:
                                         const TextStyle(color: Colors.black54)),
                               ],
@@ -1169,7 +1168,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  courseDetails[index]['details'].isEmpty
+                                  courseDetails[index]['details'].toString().toString().isEmpty
                                       ? Container()
                                       : ExpandableIcon(
                                           theme: const ExpandableThemeData(
@@ -1188,7 +1187,8 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                             ),
                           ),
                           collapsed: Container(),
-                          expanded: buildList(courseDetails[index]['details']),
+                      //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabuildList(courseDetails[index]['details'])
+                          expanded: buildList([]),
                         ),
                       ],
                     ),

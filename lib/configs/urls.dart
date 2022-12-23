@@ -4,9 +4,11 @@ class Urls {
   final signUpUserUrl = 'https://virashtechnologies.com/vti-22/api/signup.php';
   final sendOtpUrl =
       'https://virashtechnologies.com/vti-22/api/verification.php';
+  final feeDetails =
+      'http://training.virash.in/showStudFees';
   final loginUrl = 'http://training.virash.in/student_login';
   final studentCourseListUrl =
-      'https://virashtechnologies.com/vti-22/api/student-course-list.php';
+      'http://training.virash.in/get_courses';
   final courseDetailsUrl =
       'https://virashtechnologies.com/vti-22/api/course-details.php';
   final onboardingUrl =
